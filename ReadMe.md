@@ -38,8 +38,7 @@ Document:
   
 Final Delivery:
   4. Full source code with a README on how to run the system using source code and an executable file
-  5. Final report (maximum of 6 pages) according to the following template:
-  http://www.aamas2017.org/submission-instructions_aamas2017.php
+  5. Final report (maximum of 6 pages) according to the following template: http://www.aamas2017.org/submission-instructions_aamas2017.php
   6. A 3-minutes video demonstrating the agents or algorithms in-action, e.g.:
     - a. The emergence of some social phenomenon in a population;
     - b. The effect of learning new behavior (before and after learning);
