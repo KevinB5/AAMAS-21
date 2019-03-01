@@ -5,10 +5,10 @@
 - Pascal Wieler 94419
 
 MAS Requires:
-   agents should have either conflicting goals or face complex coordination problems;
-   the variety of sensors and actuators should not be too limited;
-   communication and coordination mechanisms (cooperation, negotiation, team formation, arguing);
-   pursue of goals at the expense of another (non-linear decisions) without a fixed order of priority;
+  - agents should have either conflicting goals or face complex coordination problems;
+  - the variety of sensors and actuators should not be too limited;
+  - communication and coordination mechanisms (cooperation, negotiation, team formation, arguing);
+  - pursue of goals at the expense of another (non-linear decisions) without a fixed order of priority;
 
 Objectives:
 1. Modeling the (multi)-agent system:
@@ -22,14 +22,14 @@ Objectives:
   the different approaches to address the target problem in accordance with the gathered results
   
 The project will be evaluated according to the following criteria:
-   Clear and complete description of the problem that is being addressed;
-   Conceptual correction of the simulation environment and agent behavior;
-   Suitability and correctness of any embedded mechanisms of emotions, team-work, learning, etc.;
-   Selected approach and architectural principles to address the problem;
-   Intelligent, emergent agent behavior;
-   Adequacy and completion of the undertaken experimental analyzes (gathered results);
-   Relevance of conclusions inferred from empirical results;
-   Proper positioning and communication of the findings (report and accompanying video).
+  - Clear and complete description of the problem that is being addressed;
+  - Conceptual correction of the simulation environment and agent behavior;
+  - Suitability and correctness of any embedded mechanisms of emotions, team-work, learning, etc.;
+  - Selected approach and architectural principles to address the problem;
+  - Intelligent, emergent agent behavior;
+  - Adequacy and completion of the undertaken experimental analyzes (gathered results);
+  - Relevance of conclusions inferred from empirical results;
+  - Proper positioning and communication of the findings (report and accompanying video).
   
 Document:
   1. problem definition, relevance and requirements
