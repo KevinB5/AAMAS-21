@@ -40,8 +40,8 @@ Final:
   5. Final report (maximum of 6 pages) according to the following template:
   http://www.aamas2017.org/submission-instructions_aamas2017.php
   6. A 3-minutes video demonstrating the agents or algorithms in-action, e.g.:
-    a. The emergence of some social phenomenon in a population;
-    b. The effect of learning new behavior (before and after learning);
-    c. The contagion of emotions in a population;
-    d. The “team-behavior” exhibited by some group of agents;
-    e. A comparison of the agents’ behavior between the several approaches
+    - a. The emergence of some social phenomenon in a population;
+    - b. The effect of learning new behavior (before and after learning);
+    - c. The contagion of emotions in a population;
+    - d. The “team-behavior” exhibited by some group of agents;
+    - e. A comparison of the agents’ behavior between the several approaches
