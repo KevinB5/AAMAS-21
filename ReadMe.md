@@ -35,7 +35,8 @@ Document:
   1. problem definition, relevance and requirements
   2. proposal of an (multi)agent system and its adequacy to answer/study the problem
   3. properties of the agent(s) and environment in the proposed intelligent system 6-minute presentation in the labs after the Eastern break
-Final:
+  
+Final Delivery:
   4. Full source code with a README on how to run the system using source code and an executable file
   5. Final report (maximum of 6 pages) according to the following template:
   http://www.aamas2017.org/submission-instructions_aamas2017.php
