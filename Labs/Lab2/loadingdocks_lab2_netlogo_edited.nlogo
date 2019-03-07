@@ -296,25 +296,65 @@ end
 ;;;
 ;;;  Robot's updating procedure, which defines the rules of its behaviors
 ;;;
+
 to robot-loop
   ;;; move-ahead
-  ifelse not(box-cargo?) and box-ahead and ramp-ahead
-  [move-box]
-  [ ifelse box-cargo? and (shelf-ahead = cargo-box-color) and not(box-ahead)
-    [];drop-box]
-    [ifelse not(free-ahead)
+  ifelse not(box-cargo?) and box-cell? and ramp-cell?
+  [pick-box]
+  [ ifelse box-cargo? and (shelf-color? = cargo-box-color) and not(box-cell?) and shelf-cell?
+    [drop-box]
+    [ifelse not(free-cell?)
       [rotate]
-      [move-ahead]
+      [ifelse (random 5 = 0)
+        [rotate]
+        [move-ahead]
+      ]
     ]
   ]
-
 end
+
+;;;to robot-loop-antigo
+;;;  ifelse not(box-cargo?) and box-ahead and ramp-ahead
+;;;  [move-box]
+;;;  [ ifelse box-cargo? and (shelf-ahead = cargo-box-color) and not(box-ahead)
+;;;    [];drop-box]
+;;;    [ifelse not(free-ahead)
+;;;      [rotate]
+;;;      [move-ahead]
+;;;    ]
+;;;  ]
+;;;end
 
 ;;;
 ;;; ------------------------
 ;;;   Supplementary functions
 ;;; ------------------------
 ;;;
+
+;; Stor
+to-report box-cell?
+  report box-ahead != nobody
+end
+
+to-report ramp-cell?
+  let ahead (patch-ahead 1)
+  report ( [kind] of ahead = RAMP)
+end
+
+to-report shelf-cell?
+  let ahead (patch-ahead 1)
+  report ( [kind] of ahead = SHELF)
+end
+
+to-report shelf-color?
+  let ahead (patch-ahead 1)
+  report [shelf-color] of ahead
+end
+
+to-report free-cell?
+  let ahead (patch-ahead 1)
+  report ( [kind] of ahead = ROOM_FLOOR and not any? robots-on ahead)
+end
 
 ;;;
 ;;;  Returns the shelf in front of the robot
@@ -331,21 +371,21 @@ end
 ;;;  Returns the shelf color in front of the robot
 ;;;  Returns 'nobody' if no shelf are found
 ;;;
-to-report shelf-ahead
-  let ahead (patch-ahead 1)
-  if [kind] of ahead = SHELF
-  [report [shelf-color] of ahead]
-end
+;;;to-report shelf-ahead
+;;;  let ahead (patch-ahead 1)
+;;;  if [kind] of ahead = SHELF
+;;;  [report [shelf-color] of ahead]
+;;;end
 
 ;;;
 ;;;  Returns the ramp in front of the robot
 ;;;  Returns 'nobody' if no ramp are found
 ;;;
-to-report ramp-ahead
-  let ahead (patch-ahead 1)
-  if [kind] of ahead = RAMP
-  [report true]
-end
+;;;to-report ramp-ahead
+;;;  let ahead (patch-ahead 1)
+;;;  if [kind] of ahead = RAMP
+;;;  [report true]
+;;;end
 
 ;;;
 ;;;  Returns the box in front of the robot
@@ -387,8 +427,30 @@ end
 ;;;  Rotate the robot
 ;;;
 to rotate
-  ;let r (random 360)
+  ifelse (random 2 = 0)
+  [lt 90 ]
+  [rt 90 ]
+end
 
+;;;
+;;;  Drop the box
+;;;
+to drop-box
+  let ahead (patch-ahead 1)
+  if (not (cargo = WITHOUT_CARGO))
+  [ask cargo [set xcor [pxcor] of ahead]
+    ask cargo [set ycor [pycor] of ahead]
+    set cargo WITHOUT_CARGO]
+end
+
+;;;
+;;;  Pick the box
+;;;
+to pick-box
+  let b (box-ahead)
+  if (not (b = nobody))
+  [set cargo b
+    move-box]
 end
 
 ;;;
