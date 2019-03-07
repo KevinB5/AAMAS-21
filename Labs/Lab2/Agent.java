@@ -11,28 +11,44 @@ import loadingdocks.Block.Shape;
 public class Agent extends Entity {
 
 	public int direction = 90;
+	public Box cargo;
 
-	public Agent(Point point, Color color){ 
+	public Agent(Point point, Color color,Box cargo){ 
 		super(point, color);
+		this.cargo = cargo;
 	} 
 	
+	public Agent(Point point, Color color){ 
+		super(point, color);
+	}
 	
 	/**********************
 	 **** A: decision ***** 
 	 **********************/
 	
 	public void agentDecision() {
-		if(carryingBox() && boxAhead() && rampAhead()) {
-		//	pickBox();
+		if (isWall()) {
 			rotate();
-		}else if( carryingBox() && shelfAhead() && (color == colorAhead()) && boxAhead()) {
-		//	dropBox();
+		}else if (rampCell() && boxCell() && !boxCargo()){
+			grabBox();
+		}else if (boxCargo() && shelfCell() && (shelfColor() == cargoBoxColor()) && !boxCell()) {
+			dropBox();
+		}else if (!isFreeCell()) {
 			rotate();
-		}else if (!isFreeCell() || isWall()) {
+		}else if (random.nextInt(5)==0){
 			rotate();
 		}else {
 			moveAhead();
 		}
+//		if(carryingBox() && boxAhead() && rampCell()) {
+//			grabBox();
+//		}else if( carryingBox() && shelfCell() && (color == colorAhead()) && boxAhead()) {
+//			dropBox();
+//		}else if (!isFreeCell() || isWall()) {
+//			rotate();
+//		}else {
+//			moveAhead();
+//		}
 	}
 	
 	/********************/
@@ -40,7 +56,7 @@ public class Agent extends Entity {
 	/********************/
 	
 	/* Check if the cell ahead is floor (which means not a wall, not a shelf nor a ramp) and there are any robot there */
-	protected boolean isFreeCell() {
+	protected boolean isFreeCell2() {
 	  Point ahead = aheadPosition();
 	  return Board.getBlock(ahead).shape.equals(Shape.free);
 	}
@@ -54,12 +70,12 @@ public class Agent extends Entity {
 		  return false;
 	}
 	
-	protected boolean rampAhead() {
+	protected boolean rampCell() {
 		  Point ahead = aheadPosition();
 		  return Board.getBlock(ahead).shape.equals(Shape.ramp);
 	}
 	
-	protected boolean shelfAhead() {
+	protected boolean shelfCell() {
 		  Point ahead = aheadPosition();
 		  return Board.getBlock(ahead).shape.equals(Shape.shelf);
 	}
@@ -92,9 +108,26 @@ public class Agent extends Entity {
 	public void moveAhead() {
 		Point ahead = aheadPosition();
 		Board.updateEntityPosition(point,ahead);
+		if(boxCargo())
+			cargo.point = ahead;
 		point = ahead;
 	}
 	
+	/* Grab the box */
+	public void grabBox() {
+		Point ahead = aheadPosition();
+		cargo = (Box)Board.getEntity(ahead);
+		Board.removeEntity(ahead);
+		cargo.point = point;
+	}
+	
+	/* Drop the box */
+	public void dropBox() {
+		Point ahead = aheadPosition();
+		Board.insertEntity(cargo,ahead);
+		cargo.point = point;
+		cargo = null;
+	}
 	
 	/**********************/
 	/**** D: auxiliary ****/
@@ -111,4 +144,31 @@ public class Agent extends Entity {
 		}
 		return newpoint;
 	}
+	
+	public boolean boxCargo() {
+		return cargo!=null;
+	}
+	
+	public Color cargoBoxColor() {
+		return cargo.color;
+	}
+	
+	public Color shelfColor() {
+		Point ahead = aheadPosition();
+		return Board.getBlock(ahead).color;
+	}
+	
+	public boolean isFreeCell() {
+		Point ahead = aheadPosition();
+		return Board.getBlock(ahead).shape.equals(Shape.free)
+				&& Board.getEntity(ahead)==null;
+	}
+	
+	public boolean boxCell() {
+		Point ahead = aheadPosition();
+		Entity e = Board.getEntity(ahead);
+		return e != null && e instanceof Box;
+	}
+	
+	
 }
