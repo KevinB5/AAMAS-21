@@ -425,7 +425,18 @@ end
 ;;;    - use "map" to create a list based on values of another list
 ;;;
 to-report select-action-soft-max [x y]
-
+  let action-values array:to-list (get-Q-values x y)
+  let action-probs (map [q -> (exp (q / temperature))] action-values)
+  let sum-q (sum action-probs)
+  set action-probs (map [q -> q / sum-q] action-probs)
+  let dice (random-float 1)
+  let prob-sum (item 0 action-probs)
+  let action-index 0
+  while [dice > prob-sum]
+  [set action-index (action-index + 1)
+    set prob-sum (prob-sum + (item action-index action-probs))
+  ]
+  report (item action-index ACTION-LIST)
   report item (random NUM-ACTIONS) ACTION-LIST
 end
 @#$#@#$#@
