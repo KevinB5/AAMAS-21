@@ -204,7 +204,7 @@ to reset
 
   ; linearly decrease explorations over time
   set epsilon max list 0 (1 - (episode-count / max-episodes))
-  set temperature max list 0.1 epsilon
+  set temperature max list 0.8 (epsilon * 10)
 
 end
 
